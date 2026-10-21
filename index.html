@@ -11,7 +11,8 @@
 </head>
 <body>
     <div class="bg"></div>
-    <div class="bg-glow"></div>
+    <div class="bg-overlay"></div>
+    <div id="particulas" class="particulas"></div>
 
     <main class="container">
         <header class="header">
@@ -23,7 +24,7 @@
         <div class="steps" id="steps"></div>
 
         <section class="card">
-            <div class="question-box">
+            <div class="question-box" id="question-box">
                 <span class="question-label">Cenário</span>
                 <p class="question" id="pergunta"></p>
             </div>
@@ -32,10 +33,11 @@
 
             <div class="result hidden" id="resultado">
                 <div class="result-header">
-                    <span class="year">2049</span>
-                    <h2>Na sua cozinha...</h2>
+                    <span class="year" id="efeito-titulo">2049</span>
+                    <h2 id="efeito-subtitulo">Na sua cozinha...</h2>
                 </div>
                 <p class="result-text" id="texto-resultado"></p>
+                <div class="efeito-final" id="efeito-final"></div>
                 <button class="btn-restart" id="btn-reiniciar">
                     <span>↻</span> Recomeçar a jornada
                 </button>

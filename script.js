@@ -4,6 +4,11 @@ const resultadoEl = document.getElementById("resultado");
 const textoResultadoEl = document.getElementById("texto-resultado");
 const btnReiniciar = document.getElementById("btn-reiniciar");
 const stepsEl = document.getElementById("steps");
+const questionBox = document.getElementById("question-box");
+const efeitoFinalEl = document.getElementById("efeito-final");
+const efeitoTitulo = document.getElementById("efeito-titulo");
+const efeitoSubtitulo = document.getElementById("efeito-subtitulo");
+const particulasEl = document.getElementById("particulas");
 
 const perguntas = [
     {
@@ -73,6 +78,42 @@ const perguntas = [
     }
 ];
 
+// Efeitos aleatórios no final
+const efeitosFinais = [
+    {
+        titulo: "2049",
+        subtitulo: "Na sua cozinha lendária...",
+        mensagem: "✨ Você se tornou um ícone da gastronomia!"
+    },
+    {
+        titulo: "CHEF DO ANO",
+        subtitulo: "O mundo celebra o seu sabor",
+        mensagem: "🏆 Seu nome está em todos os cardápios do futuro!"
+    },
+    {
+        titulo: "2049",
+        subtitulo: "Um legado de sabores",
+        mensagem: "🔥 Suas receitas mudaram a forma de cozinhar!"
+    },
+    {
+        titulo: "MESTRE DOS SABORES",
+        subtitulo: "A história te lembrará",
+        mensagem: "🌟 Você criou uma nova era na culinária!"
+    },
+    {
+        titulo: "2049",
+        subtitulo: "O aroma do sucesso",
+        mensagem: "🍽️ Restaurantes do mundo inteiro pedem a sua assinatura!"
+    },
+    {
+        titulo: "LENDA VIVA",
+        subtitulo: "Na sua cozinha...",
+        mensagem: "💫 Até a IA pede dicas para você agora!"
+    }
+];
+
+const emojisComida = ["🍕", "🍔", "🍣", "🍩", "🍰", "🍷", "🥐", "🥗", "🍜", "🍦", "🍪", "🧁", "🥑", "🧀", "🥩", "🍇"];
+
 let atual = 0;
 let historiaFinal = "";
 
@@ -94,11 +135,12 @@ function mostrarPergunta() {
     }
 
     criarSteps();
+    questionBox.style.display = "block";
+    resultadoEl.classList.add("hidden");
 
     const pergunta = perguntas[atual];
     perguntaEl.textContent = pergunta.enunciado;
     alternativasEl.innerHTML = "";
-    resultadoEl.classList.add("hidden");
 
     pergunta.alternativas.forEach(alt => {
         const btn = document.createElement("button");
@@ -117,23 +159,13 @@ function escolher(opcao) {
     mostrarPergunta();
 }
 
-function mostrarResultado() {
-    criarSteps();
-    alternativasEl.innerHTML = "";
-    document.querySelector(".question-box").style.display = "none";
+function soltarParticulas() {
+    particulasEl.innerHTML = "";
+    const quantidade = 28;
 
-    resultadoEl.classList.remove("hidden");
-    textoResultadoEl.textContent = historiaFinal.trim();
-}
-
-function reiniciar() {
-    atual = 0;
-    historiaFinal = "";
-    document.querySelector(".question-box").style.display = "block";
-    resultadoEl.classList.add("hidden");
-    mostrarPergunta();
-}
-
-btnReiniciar.addEventListener("click", reiniciar);
-
-mostrarPergunta();
+    for (let i = 0; i < quantidade; i++) {
+        const el = document.createElement("div");
+        el.classList.add("particula");
+        el.textContent = emojisComida[Math.floor(Math.random() * emojisComida.length)];
+        el.style.left = Math.random() * 100 + "vw";
+        el.style.fontSize = (1.2 + Math.random() * 1.4) + "rem";
