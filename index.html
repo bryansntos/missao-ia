@@ -1,81 +1,20 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EcoCantina Quiz | IA e Desperdício</title>
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Você decide o futuro da IA</title>
 </head>
 <body>
-  <div class="container">
-    <!-- Tela Inicial -->
-    <div id="tela-inicio" class="tela ativa">
-      <div class="card inicio-card">
-        <div class="logo">🌱</div>
-        <h1>EcoCantina Quiz</h1>
-        <p class="subtitulo">Teste seus conhecimentos sobre Inteligência Artificial, ética e desperdício de comida na escola</p>
-        
-        <div class="info-box">
-          <p>📋 10 perguntas de múltipla escolha</p>
-          <p>⏱️ Sem limite de tempo</p>
-          <p>🎯 Aprenda refletindo sobre IA</p>
+    <div class="caixa-principal">
+        <h1>Você decide o futuro da IA</h1>
+        <div class="caixa-perguntas"></div>
+        <div class="caixa-alternativas"></div>
+        <div class="caixa-resultado">
+            <p class="texto-resultado"></p>
         </div>
-
-        <button onclick="iniciarQuiz()" class="btn-primary">Começar o Quiz</button>
-      </div>
     </div>
-
-    <!-- Tela do Quiz -->
-    <div id="tela-quiz" class="tela">
-      <div class="progresso-container">
-        <div class="progresso-barra">
-          <div id="progresso-fill" class="progresso-fill"></div>
-        </div>
-        <span id="contador">Pergunta 1 de 10</span>
-      </div>
-
-      <div class="card pergunta-card">
-        <h2 id="pergunta-texto">Pergunta aparece aqui</h2>
-        
-        <div id="opcoes" class="opcoes">
-          <!-- Opções serão inseridas pelo JavaScript -->
-        </div>
-
-        <button id="btn-proxima" onclick="proximaPergunta()" class="btn-primary" disabled>
-          Próxima pergunta →
-        </button>
-      </div>
-    </div>
-
-    <!-- Tela de Resultado -->
-    <div id="tela-resultado" class="tela">
-      <div class="card resultado-card">
-        <div id="emoji-resultado" class="emoji-resultado">🎉</div>
-        <h1 id="titulo-resultado">Parabéns!</h1>
-        <p id="pontuacao" class="pontuacao">Você acertou 8 de 10</p>
-        <p id="mensagem-resultado" class="mensagem"></p>
-
-        <div class="resumo">
-          <h3>O que aprendemos:</h3>
-          <ul>
-            <li>A IA ajuda, mas a decisão final é sempre humana</li>
-            <li>Dados ruins geram resultados ruins</li>
-            <li>Ética e transparência são essenciais</li>
-            <li>Pensamento Computacional resolve problemas reais</li>
-          </ul>
-        </div>
-
-        <button onclick="reiniciarQuiz()" class="btn-primary">Fazer novamente</button>
-      </div>
-    </div>
-  </div>
-
-  <footer>
-    <p>Projeto escolar • Técnicas Computacionais: refletindo sobre Inteligência Artificial na escola</p>
-    <p>Start by Alura • 2026</p>
-  </footer>
-
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
