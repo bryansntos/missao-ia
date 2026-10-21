@@ -1,20 +1,84 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>Você decide o futuro da IA</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EcoCantina | IA contra o Desperdício</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="caixa-principal">
-        <h1>Você decide o futuro da IA</h1>
-        <div class="caixa-perguntas"></div>
-        <div class="caixa-alternativas"></div>
-        <div class="caixa-resultado">
-            <p class="texto-resultado"></p>
-        </div>
+  <header>
+    <div class="logo">
+      <span class="icon">🌱</span>
+      <h1>EcoCantina</h1>
     </div>
-    <script src="script.js"></script>
+    <p class="subtitle">Inteligência Artificial para reduzir o desperdício de comida na escola</p>
+  </header>
+
+  <main>
+    <!-- Seção de Previsão -->
+    <section class="card" id="previsao">
+      <h2>🔮 Previsão de Desperdício</h2>
+      <p class="descricao">Simule quantos quilos de comida podem sobrar hoje com base nos dados da cantina.</p>
+
+      <div class="form-group">
+        <label for="alunos">Quantos alunos estão presentes hoje?</label>
+        <input type="number" id="alunos" placeholder="Ex: 320" min="1">
+      </div>
+
+      <div class="form-group">
+        <label for="preparadas">Quantas refeições a cantina preparou?</label>
+        <input type="number" id="preparadas" placeholder="Ex: 350" min="1">
+      </div>
+
+      <button onclick="calcularPrevisao()" class="btn-primary">Calcular Previsão</button>
+
+      <div id="resultado" class="resultado hidden">
+        <div class="resultado-box">
+          <h3>Resultado da IA</h3>
+          <p id="kg-previsto"></p>
+          <p id="recomendacao" class="recomendacao"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Seção do Chatbot -->
+    <section class="card" id="chatbot">
+      <h2>🤖 EcoBot - Dicas Sustentáveis</h2>
+      <p class="descricao">Converse com o bot e aprenda formas de reduzir o desperdício.</p>
+
+      <div class="chat-container" id="chat-container">
+        <div class="mensagem bot">
+          Olá! Eu sou o EcoBot 🌱<br>
+          Pergunte sobre: <strong>dicas</strong>, <strong>desperdício</strong>, <strong>ia</strong> ou <strong>como ajudar</strong>.
+        </div>
+      </div>
+
+      <div class="chat-input">
+        <input type="text" id="pergunta" placeholder="Digite sua pergunta..." onkeypress="if(event.key==='Enter') enviarMensagem()">
+        <button onclick="enviarMensagem()" class="btn-enviar">Enviar</button>
+      </div>
+    </section>
+
+    <!-- Reflexão -->
+    <section class="card reflexao">
+      <h2>🧠 Reflexão sobre a Inteligência Artificial</h2>
+      <ul>
+        <li>A IA <strong>ajuda</strong>, mas não decide sozinha.</li>
+        <li>Os dados precisam ser reais e atualizados pela escola.</li>
+        <li>Sempre verificamos se as sugestões fazem sentido na nossa realidade.</li>
+        <li>Uso ético: não inventamos números e explicamos as limitações.</li>
+        <li>Este é um projeto educativo – a decisão final é sempre humana.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>Projeto escolar – Técnicas Computacionais: refletindo sobre Inteligência Artificial na escola</p>
+    <p>Start by Alura | 2026</p>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
