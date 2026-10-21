@@ -3,21 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Você decide o futuro da IA</title>
+    <title>Você decide o futuro da comida</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
+    <div class="fundo-animado"></div>
+
     <div class="caixa-principal">
-        <h1>Você decide o futuro da IA</h1>
+        <div class="cabecalho">
+            <span class="emoji-topo">🍽️</span>
+            <h1>Você decide o futuro da comida</h1>
+            <p class="subtitulo">Cada escolha molda o seu destino gastronômico</p>
+        </div>
+
+        <div class="progresso">
+            <div class="barra-progresso" id="barra"></div>
+        </div>
+
         <div class="caixa-perguntas"></div>
         <div class="caixa-alternativas"></div>
         <div class="caixa-resultado">
             <p class="texto-resultado"></p>
         </div>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>

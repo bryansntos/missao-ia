@@ -1,70 +1,71 @@
 const caixaPerguntas = document.querySelector(".caixa-perguntas");
 const caixaAlternativas = document.querySelector(".caixa-alternativas");
 const textoResultado = document.querySelector(".texto-resultado");
+const barra = document.getElementById("barra");
 
 const perguntas = [
     {
-        enunciado: "Assim que saiu da escola você se depara com uma nova tecnologia: um chat que responde qualquer dúvida e ainda gera imagens e áudios hiper-realistas. Qual o seu primeiro pensamento?",
+        enunciado: "Você chega em um restaurante futurista e o menu é gerado por um chef de inteligência artificial. Qual a sua primeira reação?",
         alternativas: [
             {
-                texto: "Isso é assustador!",
-                afirmacao: "No início você ficou com medo do que essa tecnologia pode fazer. "
+                texto: "Prefiro o cardápio clássico feito por humanos!",
+                afirmacao: "Você sempre valorizou a tradição e o toque humano na cozinha. "
             },
             {
-                texto: "Isso é maravilhoso!",
-                afirmacao: "Você quis saber como usar IA no seu dia a dia. "
+                texto: "Que incrível! Quero provar tudo que a IA inventar.",
+                afirmacao: "Você se apaixonou pelas possibilidades criativas da tecnologia na gastronomia. "
             }
         ]
     },
     {
-        enunciado: "Uma professora de tecnologia decidiu fazer uma sequência de aulas sobre Inteligência Artificial. No final de uma aula, ela pede um trabalho sobre o uso de IA em sala de aula. O que você faz?",
+        enunciado: "É final de semana e você decide cozinhar algo especial. Como prefere fazer?",
         alternativas: [
             {
-                texto: "Usa uma ferramenta de busca com IA para encontrar informações e explicar de forma clara.",
-                afirmacao: "Você conseguiu utilizar a IA para buscar informações úteis e relevantes. "
+                texto: "Sigo uma receita famosa à risca, medindo cada ingrediente.",
+                afirmacao: "Você se tornou conhecido por pratos precisos e cheios de técnica. "
             },
             {
-                texto: "Escreve o trabalho com base em conversas com colegas, pesquisas e seus próprios conhecimentos.",
-                afirmacao: "Você preferiu usar seus próprios recursos e conhecimentos para construir o trabalho. "
+                texto: "Abro a geladeira e improviso com o que tem, no feeling.",
+                afirmacao: "Sua criatividade na cozinha virou marca registrada entre amigos e família. "
             }
         ]
     },
     {
-        enunciado: "Durante um debate na turma sobre como a IA impacta o trabalho do futuro, como você se posiciona?",
+        enunciado: "Em um debate sobre o futuro da alimentação, como você se posiciona?",
         alternativas: [
             {
-                texto: "A IA pode criar novas oportunidades de emprego e melhorar habilidades humanas.",
-                afirmacao: "Você passou a impulsionar a inovação e a buscar novos caminhos profissionais com IA. "
+                texto: "Carne cultivada em laboratório e insetos são o caminho sustentável.",
+                afirmacao: "Você ajudou a popularizar proteínas alternativas e mudou a forma como as pessoas comem. "
             },
             {
-                texto: "Me preocupo com quem pode perder o emprego e defendo a proteção dos trabalhadores.",
-                afirmacao: "Sua preocupação motivou a criação de um grupo de estudos sobre o uso ético da IA. "
+                texto: "Nada substitui a comida de verdade vinda da terra e dos animais.",
+                afirmacao: "Você defendeu a agricultura tradicional e inspirou muitos a valorizarem o produto local. "
             }
         ]
     },
     {
-        enunciado: "Você precisa criar uma imagem que represente o que pensa sobre IA. Qual caminho escolhe?",
+        enunciado: "Você precisa apresentar um prato em um concurso de culinária. Qual estilo escolhe?",
         alternativas: [
             {
-                texto: "Cria a imagem usando uma ferramenta tradicional como o Paint.",
-                afirmacao: "Você notou que muita gente ainda não domina ferramentas digitais e decidiu compartilhar seus conhecimentos de design. "
+                texto: "Um prato sofisticado, com apresentação de restaurante estrelado.",
+                afirmacao: "Seus pratos ganharam fama pela beleza e sofisticação. "
             },
             {
-                texto: "Usa um gerador de imagens com Inteligência Artificial.",
-                afirmacao: "Você acelerou a criação de imagens e agora ensina outras pessoas a usarem geradores de IA. "
+                texto: "Comida caseira reconfortante que lembra o abraço da vó.",
+                afirmacao: "Você conquistou corações com o sabor de casa e aconchego. "
             }
         ]
     },
     {
-        enunciado: "No trabalho em grupo de biologia, um colega entregou um texto gerado por IA que ficou idêntico ao do chat. O que você faz?",
+        enunciado: "Um amigo usa uma IA para criar a receita inteira do jantar e não muda nada. O que você faz?",
         alternativas: [
             {
-                texto: "Acho que escrever comandos já é uma forma de contribuir, então não tem problema usar o texto inteiro.",
-                afirmacao: "Com o tempo você acabou dependendo demais da IA para quase todas as tarefas. "
+                texto: "Acho ótimo! A tecnologia existe para facilitar a vida.",
+                afirmacao: "Com o tempo você passou a confiar cada vez mais na tecnologia para suas criações culinárias. "
             },
             {
-                texto: "Reviso o trabalho, corrijo e adiciono perspectivas pessoais, porque toda máquina pode errar.",
-                afirmacao: "Você entendeu que a IA deve ser um auxílio, e não o resultado final. "
+                texto: "Reviso, experimento e adiciono meu toque pessoal, porque o segredo está no feeling.",
+                afirmacao: "Você sempre lembrou que a verdadeira magia da cozinha está nas mãos e no coração de quem prepara. "
             }
         ]
     }
@@ -73,20 +74,29 @@ const perguntas = [
 let atual = 0;
 let historiaFinal = "";
 
+function atualizarProgresso() {
+    const porcentagem = (atual / perguntas.length) * 100;
+    barra.style.width = `${porcentagem}%`;
+}
+
 function mostraPergunta() {
     if (atual >= perguntas.length) {
         mostraResultado();
         return;
     }
 
+    atualizarProgresso();
+
     const perguntaAtual = perguntas[atual];
     caixaPerguntas.textContent = perguntaAtual.enunciado;
     caixaAlternativas.innerHTML = "";
     textoResultado.textContent = "";
 
-    perguntaAtual.alternativas.forEach(alternativa => {
+    perguntaAtual.alternativas.forEach((alternativa) => {
         const botao = document.createElement("button");
-        botao.textContent = alternativa.texto;
+        const span = document.createElement("span");
+        span.textContent = alternativa.texto;
+        botao.appendChild(span);
         botao.addEventListener("click", () => selecionarResposta(alternativa));
         caixaAlternativas.appendChild(botao);
     });
@@ -99,13 +109,18 @@ function selecionarResposta(opcao) {
 }
 
 function mostraResultado() {
-    caixaPerguntas.textContent = "Em 2049...";
+    atualizarProgresso();
+    barra.style.width = "100%";
+
+    caixaPerguntas.textContent = "Em 2049, na sua cozinha...";
     textoResultado.textContent = historiaFinal.trim();
     caixaAlternativas.innerHTML = "";
 
     const botaoReiniciar = document.createElement("button");
-    botaoReiniciar.textContent = "Tentar novamente";
     botaoReiniciar.classList.add("botao-reiniciar");
+    const span = document.createElement("span");
+    span.textContent = "🔄  Cozinhar de novo";
+    botaoReiniciar.appendChild(span);
     botaoReiniciar.addEventListener("click", reiniciarQuiz);
     caixaAlternativas.appendChild(botaoReiniciar);
 }
@@ -114,6 +129,7 @@ function reiniciarQuiz() {
     atual = 0;
     historiaFinal = "";
     textoResultado.textContent = "";
+    barra.style.width = "0%";
     mostraPergunta();
 }
 
