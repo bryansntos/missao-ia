@@ -3,32 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Você decide o futuro da comida</title>
+    <title>O Destino da Sua Cozinha</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="fundo-animado"></div>
+    <div class="bg"></div>
+    <div class="bg-glow"></div>
 
-    <div class="caixa-principal">
-        <div class="cabecalho">
-            <span class="emoji-topo">🍽️</span>
-            <h1>Você decide o futuro da comida</h1>
-            <p class="subtitulo">Cada escolha molda o seu destino gastronômico</p>
-        </div>
+    <main class="container">
+        <header class="header">
+            <div class="badge">✦ Missão Gastronômica</div>
+            <h1>O Destino da Sua Cozinha</h1>
+            <p class="subtitle">Suas escolhas definem o futuro do sabor</p>
+        </header>
 
-        <div class="progresso">
-            <div class="barra-progresso" id="barra"></div>
-        </div>
+        <div class="steps" id="steps"></div>
 
-        <div class="caixa-perguntas"></div>
-        <div class="caixa-alternativas"></div>
-        <div class="caixa-resultado">
-            <p class="texto-resultado"></p>
-        </div>
-    </div>
+        <section class="card">
+            <div class="question-box">
+                <span class="question-label">Cenário</span>
+                <p class="question" id="pergunta"></p>
+            </div>
+
+            <div class="options" id="alternativas"></div>
+
+            <div class="result hidden" id="resultado">
+                <div class="result-header">
+                    <span class="year">2049</span>
+                    <h2>Na sua cozinha...</h2>
+                </div>
+                <p class="result-text" id="texto-resultado"></p>
+                <button class="btn-restart" id="btn-reiniciar">
+                    <span>↻</span> Recomeçar a jornada
+                </button>
+            </div>
+        </section>
+    </main>
 
     <script src="script.js"></script>
 </body>

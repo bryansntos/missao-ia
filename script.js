@@ -1,71 +1,73 @@
-const caixaPerguntas = document.querySelector(".caixa-perguntas");
-const caixaAlternativas = document.querySelector(".caixa-alternativas");
-const textoResultado = document.querySelector(".texto-resultado");
-const barra = document.getElementById("barra");
+const perguntaEl = document.getElementById("pergunta");
+const alternativasEl = document.getElementById("alternativas");
+const resultadoEl = document.getElementById("resultado");
+const textoResultadoEl = document.getElementById("texto-resultado");
+const btnReiniciar = document.getElementById("btn-reiniciar");
+const stepsEl = document.getElementById("steps");
 
 const perguntas = [
     {
-        enunciado: "Você chega em um restaurante futurista e o menu é gerado por um chef de inteligência artificial. Qual a sua primeira reação?",
+        enunciado: "Você entra em um restaurante onde o menu é criado por uma inteligência artificial a cada segundo. Qual a sua primeira reação?",
         alternativas: [
             {
-                texto: "Prefiro o cardápio clássico feito por humanos!",
-                afirmacao: "Você sempre valorizou a tradição e o toque humano na cozinha. "
+                texto: "Prefiro o cardápio clássico, escrito por mãos humanas.",
+                afirmacao: "Você sempre defendeu o valor da tradição e do toque humano na cozinha. "
             },
             {
-                texto: "Que incrível! Quero provar tudo que a IA inventar.",
-                afirmacao: "Você se apaixonou pelas possibilidades criativas da tecnologia na gastronomia. "
+                texto: "Quero provar tudo o que a IA inventar. O futuro chegou!",
+                afirmacao: "Você se deixou seduzir pelas possibilidades infinitas da tecnologia na gastronomia. "
             }
         ]
     },
     {
-        enunciado: "É final de semana e você decide cozinhar algo especial. Como prefere fazer?",
+        enunciado: "É sábado à noite e a cozinha está só sua. Como você decide criar o jantar?",
         alternativas: [
             {
-                texto: "Sigo uma receita famosa à risca, medindo cada ingrediente.",
-                afirmacao: "Você se tornou conhecido por pratos precisos e cheios de técnica. "
+                texto: "Abro um livro de receitas clássicas e sigo cada passo com precisão.",
+                afirmacao: "Sua disciplina e respeito à técnica se tornaram sua assinatura. "
             },
             {
-                texto: "Abro a geladeira e improviso com o que tem, no feeling.",
-                afirmacao: "Sua criatividade na cozinha virou marca registrada entre amigos e família. "
+                texto: "Abro a geladeira e improviso. O feeling é o melhor tempero.",
+                afirmacao: "Sua criatividade livre e espontânea conquistou todos ao seu redor. "
             }
         ]
     },
     {
-        enunciado: "Em um debate sobre o futuro da alimentação, como você se posiciona?",
+        enunciado: "Em um grande debate sobre o futuro da alimentação, qual lado você toma?",
         alternativas: [
             {
-                texto: "Carne cultivada em laboratório e insetos são o caminho sustentável.",
-                afirmacao: "Você ajudou a popularizar proteínas alternativas e mudou a forma como as pessoas comem. "
+                texto: "Carne cultivada, insetos e proteínas alternativas são o caminho.",
+                afirmacao: "Você se tornou uma voz importante na revolução das proteínas sustentáveis. "
             },
             {
-                texto: "Nada substitui a comida de verdade vinda da terra e dos animais.",
-                afirmacao: "Você defendeu a agricultura tradicional e inspirou muitos a valorizarem o produto local. "
+                texto: "Nada substitui o sabor verdadeiro da terra e do animal.",
+                afirmacao: "Você lutou para preservar a agricultura tradicional e o produto local. "
             }
         ]
     },
     {
-        enunciado: "Você precisa apresentar um prato em um concurso de culinária. Qual estilo escolhe?",
+        enunciado: "Você precisa apresentar um prato em um concurso de alto prestígio. Qual estilo escolhe?",
         alternativas: [
             {
-                texto: "Um prato sofisticado, com apresentação de restaurante estrelado.",
-                afirmacao: "Seus pratos ganharam fama pela beleza e sofisticação. "
+                texto: "Alta gastronomia: técnica impecável e apresentação de museu.",
+                afirmacao: "Seus pratos ganharam fama pela beleza quase artística e pela perfeição técnica. "
             },
             {
-                texto: "Comida caseira reconfortante que lembra o abraço da vó.",
-                afirmacao: "Você conquistou corações com o sabor de casa e aconchego. "
+                texto: "Comida de afeto: o sabor que abraça e lembra a casa da vó.",
+                afirmacao: "Você conquistou o mundo com o poder do aconchego e da memória afetiva. "
             }
         ]
     },
     {
-        enunciado: "Um amigo usa uma IA para criar a receita inteira do jantar e não muda nada. O que você faz?",
+        enunciado: "Um colega entrega um prato inteiramente criado por IA, sem nenhuma alteração. O que você faz?",
         alternativas: [
             {
-                texto: "Acho ótimo! A tecnologia existe para facilitar a vida.",
-                afirmacao: "Com o tempo você passou a confiar cada vez mais na tecnologia para suas criações culinárias. "
+                texto: "Acho genial. A tecnologia existe para nos libertar.",
+                afirmacao: "Com o tempo você passou a confiar cada vez mais na inteligência artificial como parceira criativa. "
             },
             {
-                texto: "Reviso, experimento e adiciono meu toque pessoal, porque o segredo está no feeling.",
-                afirmacao: "Você sempre lembrou que a verdadeira magia da cozinha está nas mãos e no coração de quem prepara. "
+                texto: "Reviso, experimento e coloco minha alma no prato. A magia está nas mãos.",
+                afirmacao: "Você nunca esqueceu que a verdadeira cozinha nasce do coração e das mãos de quem prepara. "
             }
         ]
     }
@@ -74,63 +76,64 @@ const perguntas = [
 let atual = 0;
 let historiaFinal = "";
 
-function atualizarProgresso() {
-    const porcentagem = (atual / perguntas.length) * 100;
-    barra.style.width = `${porcentagem}%`;
-}
-
-function mostraPergunta() {
-    if (atual >= perguntas.length) {
-        mostraResultado();
-        return;
-    }
-
-    atualizarProgresso();
-
-    const perguntaAtual = perguntas[atual];
-    caixaPerguntas.textContent = perguntaAtual.enunciado;
-    caixaAlternativas.innerHTML = "";
-    textoResultado.textContent = "";
-
-    perguntaAtual.alternativas.forEach((alternativa) => {
-        const botao = document.createElement("button");
-        const span = document.createElement("span");
-        span.textContent = alternativa.texto;
-        botao.appendChild(span);
-        botao.addEventListener("click", () => selecionarResposta(alternativa));
-        caixaAlternativas.appendChild(botao);
+function criarSteps() {
+    stepsEl.innerHTML = "";
+    perguntas.forEach((_, i) => {
+        const step = document.createElement("div");
+        step.classList.add("step");
+        if (i < atual) step.classList.add("done");
+        if (i === atual) step.classList.add("active");
+        stepsEl.appendChild(step);
     });
 }
 
-function selecionarResposta(opcao) {
+function mostrarPergunta() {
+    if (atual >= perguntas.length) {
+        mostrarResultado();
+        return;
+    }
+
+    criarSteps();
+
+    const pergunta = perguntas[atual];
+    perguntaEl.textContent = pergunta.enunciado;
+    alternativasEl.innerHTML = "";
+    resultadoEl.classList.add("hidden");
+
+    pergunta.alternativas.forEach(alt => {
+        const btn = document.createElement("button");
+        btn.classList.add("option");
+        const span = document.createElement("span");
+        span.textContent = alt.texto;
+        btn.appendChild(span);
+        btn.addEventListener("click", () => escolher(alt));
+        alternativasEl.appendChild(btn);
+    });
+}
+
+function escolher(opcao) {
     historiaFinal += opcao.afirmacao;
     atual++;
-    mostraPergunta();
+    mostrarPergunta();
 }
 
-function mostraResultado() {
-    atualizarProgresso();
-    barra.style.width = "100%";
+function mostrarResultado() {
+    criarSteps();
+    alternativasEl.innerHTML = "";
+    document.querySelector(".question-box").style.display = "none";
 
-    caixaPerguntas.textContent = "Em 2049, na sua cozinha...";
-    textoResultado.textContent = historiaFinal.trim();
-    caixaAlternativas.innerHTML = "";
-
-    const botaoReiniciar = document.createElement("button");
-    botaoReiniciar.classList.add("botao-reiniciar");
-    const span = document.createElement("span");
-    span.textContent = "🔄  Cozinhar de novo";
-    botaoReiniciar.appendChild(span);
-    botaoReiniciar.addEventListener("click", reiniciarQuiz);
-    caixaAlternativas.appendChild(botaoReiniciar);
+    resultadoEl.classList.remove("hidden");
+    textoResultadoEl.textContent = historiaFinal.trim();
 }
 
-function reiniciarQuiz() {
+function reiniciar() {
     atual = 0;
     historiaFinal = "";
-    textoResultado.textContent = "";
-    barra.style.width = "0%";
-    mostraPergunta();
+    document.querySelector(".question-box").style.display = "block";
+    resultadoEl.classList.add("hidden");
+    mostrarPergunta();
 }
 
-mostraPergunta();
+btnReiniciar.addEventListener("click", reiniciar);
+
+mostrarPergunta();
