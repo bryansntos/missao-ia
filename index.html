@@ -3,80 +3,227 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EcoCantina | IA contra o Desperdício</title>
+  <title>EcoCantina | IA contra o Desperdício de Alimentos</title>
+  <meta name="description" content="Projeto escolar que usa Inteligência Artificial para reduzir o desperdício de comida na cantina da escola.">
   <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-  <header>
-    <div class="logo">
-      <span class="icon">🌱</span>
-      <h1>EcoCantina</h1>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="logo">
+        <span class="logo-icon">🌱</span>
+        <span class="logo-text">EcoCantina</span>
+      </div>
+      <div class="nav-links">
+        <a href="#inicio" class="nav-link active">Início</a>
+        <a href="#simulador" class="nav-link">Simulador</a>
+        <a href="#chat" class="nav-link">EcoBot</a>
+        <a href="#dados" class="nav-link">Dados</a>
+        <a href="#reflexao" class="nav-link">Reflexão IA</a>
+      </div>
+      <button id="theme-toggle" class="theme-btn" aria-label="Alternar tema">
+        <span class="theme-icon">🌙</span>
+      </button>
     </div>
-    <p class="subtitle">Inteligência Artificial para reduzir o desperdício de comida na escola</p>
-  </header>
+  </nav>
 
-  <main>
-    <!-- Seção de Previsão -->
-    <section class="card" id="previsao">
-      <h2>🔮 Previsão de Desperdício</h2>
-      <p class="descricao">Simule quantos quilos de comida podem sobrar hoje com base nos dados da cantina.</p>
+  <!-- Hero -->
+  <section id="inicio" class="hero">
+    <div class="hero-content">
+      <div class="badge">Projeto Escolar • Start by Alura 2026</div>
+      <h1>Inteligência Artificial<br>contra o <span class="highlight">desperdício</span></h1>
+      <p class="hero-desc">
+        Um projeto que usa técnicas computacionais e IA de forma ética e responsável 
+        para ajudar a cantina da escola a desperdiçar menos comida.
+      </p>
+      <div class="hero-buttons">
+        <a href="#simulador" class="btn btn-primary">Começar Simulação</a>
+        <a href="#reflexao" class="btn btn-secondary">Entender a IA</a>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-card">
+        <span class="stat-number">9.4kg</span>
+        <span class="stat-label">Média diária de desperdício</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">~30%</span>
+        <span class="stat-label">Pode ser reduzido com IA</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">100%</span>
+        <span class="stat-label">Decisão humana final</span>
+      </div>
+    </div>
+  </section>
 
-      <div class="form-group">
-        <label for="alunos">Quantos alunos estão presentes hoje?</label>
-        <input type="number" id="alunos" placeholder="Ex: 320" min="1">
+  <!-- Simulador -->
+  <section id="simulador" class="section">
+    <div class="section-header">
+      <h2>🔮 Simulador Inteligente</h2>
+      <p>Preveja o desperdício de hoje e receba recomendações da IA</p>
+    </div>
+
+    <div class="simulator-grid">
+      <div class="card glass">
+        <h3>Dados de Hoje</h3>
+        <div class="form-group">
+          <label for="alunos">Alunos presentes</label>
+          <input type="number" id="alunos" placeholder="Ex: 320" min="1" value="310">
+        </div>
+        <div class="form-group">
+          <label for="preparadas">Refeições preparadas</label>
+          <input type="number" id="preparadas" placeholder="Ex: 350" min="1" value="340">
+        </div>
+        <div class="form-group">
+          <label for="cardapio">Cardápio principal</label>
+          <select id="cardapio">
+            <option value="1.0">Arroz + Feijão + Proteína</option>
+            <option value="1.15">Macarrão / Massas</option>
+            <option value="1.25">Feijoada / Pratos pesados</option>
+            <option value="0.9">Saladas / Leve</option>
+          </select>
+        </div>
+        <button onclick="calcularPrevisao()" class="btn btn-primary full">
+          ⚡ Calcular com IA
+        </button>
       </div>
 
-      <div class="form-group">
-        <label for="preparadas">Quantas refeições a cantina preparou?</label>
-        <input type="number" id="preparadas" placeholder="Ex: 350" min="1">
-      </div>
-
-      <button onclick="calcularPrevisao()" class="btn-primary">Calcular Previsão</button>
-
-      <div id="resultado" class="resultado hidden">
-        <div class="resultado-box">
-          <h3>Resultado da IA</h3>
-          <p id="kg-previsto"></p>
-          <p id="recomendacao" class="recomendacao"></p>
+      <div class="card glass result-card" id="resultado-card">
+        <div class="result-placeholder" id="placeholder">
+          <div class="placeholder-icon">📊</div>
+          <p>Preencha os dados e clique em calcular</p>
+        </div>
+        <div class="result-content hidden" id="result-content">
+          <div class="result-header">
+            <span class="result-badge" id="nivel-risco">—</span>
+            <h3 id="kg-previsto">— kg</h3>
+          </div>
+          <p class="recomendacao" id="recomendacao"></p>
+          <div class="result-details">
+            <div class="detail">
+              <span>Proporção</span>
+              <strong id="proporcao">—</strong>
+            </div>
+            <div class="detail">
+              <span>Fator cardápio</span>
+              <strong id="fator">—</strong>
+            </div>
+          </div>
+          <button onclick="salvarSimulacao()" class="btn btn-outline">💾 Salvar esta simulação</button>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Seção do Chatbot -->
-    <section class="card" id="chatbot">
-      <h2>🤖 EcoBot - Dicas Sustentáveis</h2>
-      <p class="descricao">Converse com o bot e aprenda formas de reduzir o desperdício.</p>
+  <!-- Gráfico + Histórico -->
+  <section id="dados" class="section">
+    <div class="section-header">
+      <h2>📈 Dados e Histórico</h2>
+      <p>Visualize o desperdício histórico e suas simulações salvas</p>
+    </div>
 
-      <div class="chat-container" id="chat-container">
-        <div class="mensagem bot">
-          Olá! Eu sou o EcoBot 🌱<br>
-          Pergunte sobre: <strong>dicas</strong>, <strong>desperdício</strong>, <strong>ia</strong> ou <strong>como ajudar</strong>.
+    <div class="data-grid">
+      <div class="card glass">
+        <h3>Desperdício da Semana (dados de exemplo)</h3>
+        <canvas id="chartDesperdicio" height="220"></canvas>
+      </div>
+
+      <div class="card glass">
+        <h3>Suas Simulações Salvas</h3>
+        <div id="historico-lista" class="historico-lista">
+          <p class="empty">Nenhuma simulação salva ainda.</p>
+        </div>
+        <button onclick="limparHistorico()" class="btn btn-outline small">Limpar histórico</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Chatbot -->
+  <section id="chat" class="section">
+    <div class="section-header">
+      <h2>🤖 EcoBot</h2>
+      <p>Converse com a IA e aprenda sobre desperdício e uso responsável de tecnologia</p>
+    </div>
+
+    <div class="chat-wrapper card glass">
+      <div class="chat-header">
+        <div class="bot-info">
+          <div class="bot-avatar">🌱</div>
+          <div>
+            <strong>EcoBot</strong>
+            <span class="status online">Online</span>
+          </div>
         </div>
       </div>
-
-      <div class="chat-input">
-        <input type="text" id="pergunta" placeholder="Digite sua pergunta..." onkeypress="if(event.key==='Enter') enviarMensagem()">
-        <button onclick="enviarMensagem()" class="btn-enviar">Enviar</button>
+      <div class="chat-messages" id="chat-messages"></div>
+      <div class="chat-input-area">
+        <input type="text" id="chat-input" placeholder="Pergunte sobre desperdício, dicas, IA ética..." 
+               onkeypress="if(event.key==='Enter') enviarMensagem()">
+        <button onclick="enviarMensagem()" class="btn-send">➤</button>
       </div>
-    </section>
+      <div class="quick-replies">
+        <button onclick="perguntaRapida('dicas')">Dicas práticas</button>
+        <button onclick="perguntaRapida('ia ética')">IA e ética</button>
+        <button onclick="perguntaRapida('como funciona')">Como funciona a previsão?</button>
+        <button onclick="perguntaRapida('limites')">Limites da IA</button>
+      </div>
+    </div>
+  </section>
 
-    <!-- Reflexão -->
-    <section class="card reflexao">
-      <h2>🧠 Reflexão sobre a Inteligência Artificial</h2>
-      <ul>
-        <li>A IA <strong>ajuda</strong>, mas não decide sozinha.</li>
-        <li>Os dados precisam ser reais e atualizados pela escola.</li>
-        <li>Sempre verificamos se as sugestões fazem sentido na nossa realidade.</li>
-        <li>Uso ético: não inventamos números e explicamos as limitações.</li>
-        <li>Este é um projeto educativo – a decisão final é sempre humana.</li>
-      </ul>
-    </section>
-  </main>
+  <!-- Reflexão -->
+  <section id="reflexao" class="section">
+    <div class="section-header">
+      <h2>🧠 Reflexão sobre Inteligência Artificial</h2>
+      <p>O que aprendemos neste projeto (Pensamento Computacional + Ética)</p>
+    </div>
 
-  <footer>
-    <p>Projeto escolar – Técnicas Computacionais: refletindo sobre Inteligência Artificial na escola</p>
-    <p>Start by Alura | 2026</p>
+    <div class="reflexao-grid">
+      <div class="card glass">
+        <div class="reflexao-icon">1️⃣</div>
+        <h3>Decomposição</h3>
+        <p>Quebramos o problema grande (“desperdício na cantina”) em partes menores: dados históricos, previsão, recomendação e conscientização.</p>
+      </div>
+      <div class="card glass">
+        <div class="reflexao-icon">2️⃣</div>
+        <h3>Reconhecimento de Padrões</h3>
+        <p>Observamos que certos cardápios e proporções de preparação geram mais sobra. A IA ajuda a identificar esses padrões.</p>
+      </div>
+      <div class="card glass">
+        <div class="reflexao-icon">3️⃣</div>
+        <h3>Abstração</h3>
+        <p>Ignoramos detalhes irrelevantes e focamos no que importa: número de alunos, refeições preparadas e tipo de cardápio.</p>
+      </div>
+      <div class="card glass">
+        <div class="reflexao-icon">4️⃣</div>
+        <h3>Algoritmo</h3>
+        <p>Criamos uma sequência clara de passos (coletar → calcular → recomendar → refletir) que pode ser executada por humano ou máquina.</p>
+      </div>
+      <div class="card glass full-width">
+        <div class="reflexao-icon">⚠️</div>
+        <h3>Limites e Ética da IA</h3>
+        <ul class="etica-lista">
+          <li>A IA <strong>sugere</strong>, nunca decide sozinha. A decisão final é sempre humana.</li>
+          <li>Os dados de exemplo são fictícios. Em um projeto real precisaríamos de dados verdadeiros da cantina.</li>
+          <li>Algoritmos podem ter vieses se os dados forem ruins ou incompletos.</li>
+          <li>Nunca inventamos números. Transparência é essencial.</li>
+          <li>Tecnologia a serviço da sustentabilidade e da educação, não o contrário.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-logo">🌱 EcoCantina</div>
+      <p>Projeto da disciplina <strong>Técnicas Computacionais: refletindo sobre Inteligência Artificial na escola</strong></p>
+      <p>Start by Alura • 2026 • Uso educacional</p>
+      <p class="footer-note">Este é um protótipo educativo. A IA aqui é uma simulação didática.</p>
+    </div>
   </footer>
 
   <script src="script.js"></script>
